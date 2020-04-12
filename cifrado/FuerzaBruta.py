@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 import vigenere
-
-cipherText = "JHLIÑWNACBEPOACPCDDMRKUMDSPITSLIRKAKVACIFWCACA"
-dictionary = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
-hash = "9ad2ba7c3dfdcb37915dcdf26029d60ce1aa780f743de49f04ade3662e694c34"
+import argparse
 
 def brute(keys):
     """ Para cada password del fichero 'passwords' trata de descifrar el texto cipherText
@@ -28,4 +25,16 @@ def main():
 
 
 if __name__ == '__main__':
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument('-i', '--input', type=argparse.FileType(), help='input file')
+    argparser.add_argument('-d', '--dictionary', type=argparse.FileType(),
+                           help='file with the dictionary to be used')
+    argparser.add_argument('--hash', type=argparse.FileType(),
+                           help='file with the hash to be used for comparison')
+    args = argparser.parse_args()
+
+    cipherText = args.input.read().replace("\n", "")
+    dictionary = args.dictionary.read().replace("\n", "")
+    hash = args.hash.read().replace("\n", "")
+
     main()
